@@ -84,71 +84,75 @@ This repo tells the full story of how it was built.
 ## System architecture
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#2D628C','primaryTextColor':'#fff','primaryBorderColor':'#1a4a6b','lineColor':'#5a8db5','fontFamily':'Inter, sans-serif','fontSize':'14px'}}}%%
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'fontFamily': 'Inter, system-ui, -apple-system, sans-serif',
+    'fontSize': '15px',
+    'lineColor': '#94a3b8'
+  }
+}}%%
 flowchart TB
 
-  subgraph CLIENT["📱 &nbsp; Mobile client &nbsp; — &nbsp; React Native · Expo SDK 54 · iOS / Android / Web"]
+  User(["👤 &nbsp; User &nbsp;·&nbsp; iOS / Android"])
+
+  subgraph APP[" &nbsp;&nbsp;📱 &nbsp; Mobile App &nbsp;&nbsp; "]
     direction TB
-    Router["🗺️ &nbsp; Expo Router<br/><sub>file-based routes &nbsp;·&nbsp; (tabs) + (modals)</sub>"]
-    UI["🎨 &nbsp; UI layer<br/><sub>370+ components &nbsp;·&nbsp; 17 feature modules</sub>"]
-    Stores["🗂️ &nbsp; State layer<br/><sub>21 Zustand stores &nbsp;·&nbsp; persisted via AsyncStorage</sub>"]
-    Native["📲 &nbsp; Native APIs<br/><sub>Camera · Push · Haptics · Auth · Image · Media · Audio</sub>"]
-    Cache["⚡ &nbsp; Cache layer<br/><sub>dataCache · imageCache · videoCacheStore</sub>"]
-    Router --> UI
-    UI <--> Stores
-    UI --> Native
-    Stores <--> Cache
+    UI["<b>UI Layer</b><br/><i>React Native · Expo Router</i>"]
+    State["<b>State</b><br/><i>Zustand stores</i>"]
+    NativeAPI["<b>Native APIs</b><br/><i>Camera · Push · Haptics</i>"]
+    UI <--> State
+    UI --> NativeAPI
   end
 
-  subgraph BACKEND["☁️ &nbsp; Backend &nbsp; — &nbsp; Supabase"]
+  subgraph BACK[" &nbsp;&nbsp;☁️ &nbsp; Backend &nbsp;·&nbsp; Supabase &nbsp;&nbsp; "]
     direction LR
-    DB[("🐘 &nbsp; Postgres<br/><sub>RLS · Realtime · Triggers</sub>")]
-    AuthSvc["🔐 &nbsp; Auth<br/><sub>Apple · Google · Phone · Email</sub>"]
-    Storage[("📦 &nbsp; Storage<br/><sub>meal photos · avatars · posts</sub>")]
-    subgraph EDGE["⚡ 18 Edge Functions"]
-      direction TB
-      AI["<b>AI / Nutrition</b><br/>analyze-food-v2<br/>analyze-barcode<br/>analyze-manual<br/>nutrition-service<br/>translate-food-names"]
-      Subs["<b>Subscriptions</b><br/>rc-webhook<br/>sync-from-revenuecat<br/>sync-subscription<br/>batch-sync-subscriptions<br/>expire-pro-trials"]
-      Social["<b>Social / Moderation</b><br/>moderate-user-media<br/>discover-contacts<br/>set-phone-number"]
-      Notif["<b>Notifications & Lifecycle</b><br/>send-push-from-notification<br/>weight-prompt<br/>send-feedback<br/>delete-account"]
-    end
+    Auth["<b>Auth</b>"]
+    DB[("<b>Postgres</b><br/><i>+ RLS · Realtime</i>")]
+    Storage[("<b>Storage</b><br/><i>media</i>")]
+    Edge["<b>Edge Functions</b><br/><i>AI · webhooks · push fan-out</i>"]
   end
 
-  subgraph EXTERNAL["🌍 &nbsp; External services"]
+  subgraph SVC[" &nbsp;&nbsp;🌍 &nbsp; External Services &nbsp;&nbsp; "]
     direction LR
-    OpenAI["🧠 &nbsp; OpenAI<br/><sub>GPT-4o Vision &nbsp;·&nbsp; text</sub>"]
-    RC["💳 &nbsp; RevenueCat<br/><sub>App Store + Play unified</sub>"]
-    Push["🔔 &nbsp; Expo Push<br/><sub>per-user fan-out</sub>"]
-    OFF["🥦 &nbsp; Open Food Facts<br/><sub>barcode database</sub>"]
+    OpenAI["<b>OpenAI</b><br/><i>GPT-4o Vision</i>"]
+    RevCat["<b>RevenueCat</b><br/><i>subscriptions</i>"]
+    Push["<b>Expo Push</b><br/><i>notifications</i>"]
   end
 
-  subgraph DEPLOY["🚀 &nbsp; Build & release pipeline"]
+  subgraph DEPLOY[" &nbsp;&nbsp;🚀 &nbsp; Build & Distribution &nbsp;&nbsp; "]
     direction LR
-    EAS["⚙️ &nbsp; EAS Build"]
-    OTA["📡 &nbsp; EAS Update<br/><sub>over-the-air</sub>"]
-    Stores2["🏪 &nbsp; App Store<br/>Google Play"]
+    EAS["<b>EAS Build</b><br/><i>+ OTA updates</i>"]
+    Apps[("<b>App Store</b><br/><b>Google Play</b>")]
   end
 
-  CLIENT ==>|"HTTPS &nbsp;+&nbsp; Realtime channels"| BACKEND
-  AI --> OpenAI
-  AI --> OFF
-  Subs --> RC
-  Notif --> Push
-  EAS --> Stores2
-  Stores2 -.->|"installs"| CLIENT
-  OTA -.->|"live JS bundles"| CLIENT
+  User <==> APP
+  APP <==>|"HTTPS &nbsp;+&nbsp; Realtime"| BACK
+  Edge --> OpenAI
+  Edge --> RevCat
+  Edge --> Push
+  EAS --> Apps
+  Apps -.->|"install"| User
+  EAS -.->|"OTA bundle"| APP
 
-  classDef clientStyle fill:#2D628C,stroke:#1a4a6b,color:#fff,stroke-width:2px
-  classDef backendStyle fill:#3ECF8E,stroke:#2a9968,color:#0a3d2e,stroke-width:2px
-  classDef externalStyle fill:#412991,stroke:#2a1862,color:#fff,stroke-width:2px
-  classDef deployStyle fill:#FE486F,stroke:#c93457,color:#fff,stroke-width:2px
-  classDef edgeFn fill:#a4f3d0,stroke:#2a9968,color:#0a3d2e
+  %% Node colors
+  classDef userNode fill:#ffffff,stroke:#1e293b,color:#0f172a,stroke-width:3px
+  classDef appNode fill:#dbeafe,stroke:#2563eb,color:#1e3a8a,stroke-width:1.5px
+  classDef backNode fill:#d1fae5,stroke:#059669,color:#064e3b,stroke-width:1.5px
+  classDef svcNode fill:#fce7f3,stroke:#db2777,color:#831843,stroke-width:1.5px
+  classDef depNode fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:1.5px
 
-  class Router,UI,Stores,Native,Cache clientStyle
-  class DB,AuthSvc,Storage backendStyle
-  class AI,Subs,Social,Notif edgeFn
-  class OpenAI,RC,Push,OFF externalStyle
-  class EAS,OTA,Stores2 deployStyle
+  class User userNode
+  class UI,State,NativeAPI appNode
+  class Auth,DB,Storage,Edge backNode
+  class OpenAI,RevCat,Push svcNode
+  class EAS,Apps depNode
+
+  %% Subgraph backgrounds
+  style APP fill:#eff6ff,stroke:#bfdbfe,stroke-width:1px,color:#1e3a8a
+  style BACK fill:#ecfdf5,stroke:#a7f3d0,stroke-width:1px,color:#064e3b
+  style SVC fill:#fdf2f8,stroke:#fbcfe8,stroke-width:1px,color:#831843
+  style DEPLOY fill:#fffbeb,stroke:#fde68a,stroke-width:1px,color:#78350f
 ```
 
 ### A few decisions worth flagging
