@@ -4,7 +4,7 @@
 
 # Spotter AI
 
-### The all-in-one fitness, nutrition and health social app — powered by AI
+### Fitness, nutrition and a fitness social network — all in one app, powered by AI.
 
 [![App Store](https://img.shields.io/badge/App_Store-Download-0D96F6?style=for-the-badge&logo=apple&logoColor=white)](https://apps.apple.com/us/app/spotter-ai/id6756170372)
 [![Google Play](https://img.shields.io/badge/Google_Play-Download-34A853?style=for-the-badge&logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=com.alfonmayoral.spotteria)
@@ -15,7 +15,7 @@
 [![Commits](https://img.shields.io/badge/commits-748-blue?style=flat-square)](#)
 [![Pull Requests](https://img.shields.io/badge/pull%20requests-106-orange?style=flat-square)](#)
 [![Status](https://img.shields.io/badge/status-In%20Production-success?style=flat-square)](#)
-[![License](https://img.shields.io/badge/source-private-lightgrey?style=flat-square)](#about-this-repository)
+[![Source](https://img.shields.io/badge/source-private-lightgrey?style=flat-square)](#about-this-repository)
 
 [![React Native](https://img.shields.io/badge/React_Native-0.81-61DAFB?style=flat-square&logo=react&logoColor=black)](https://reactnative.dev/)
 [![Expo](https://img.shields.io/badge/Expo-SDK_54-000020?style=flat-square&logo=expo&logoColor=white)](https://expo.dev/)
@@ -33,112 +33,131 @@
 
 ## About this repository
 
-**This is the public showcase repository for Spotter AI.** The actual production source code lives in a private repository and is not published here — what you'll find below is an end-to-end architectural and product walkthrough, written to give recruiters, engineers and curious users a clear sense of what was built, how it's built, and why.
-
-Everything in this README — screenshots, statistics, architectural notes — is taken directly from the production codebase as of April 2026.
+**This is the public showcase for Spotter AI.** The production source code is private — this repo is a full walkthrough of *what* was built, *how* it works under the hood, and *why* it exists. Everything you read here is pulled directly from the live codebase as of April 2026, after ten months of iteration with real users on both App Store and Google Play.
 
 ---
 
 ## Table of contents
 
-- [Why Spotter exists](#why-spotter-exists)
-- [The 30-second pitch](#the-30-second-pitch)
+- [The story behind it](#the-story-behind-it)
+- [What you can do with it](#what-you-can-do-with-it)
 - [System architecture](#system-architecture)
 - [Repository layout](#repository-layout)
-- [Feature deep-dives](#feature-deep-dives)
-  - [Nutrition — AI food analysis with macro tracking](#nutrition--ai-food-analysis-with-macro-tracking)
-  - [Workout — full training engine with rest, supersets and history](#workout--full-training-engine-with-rest-supersets-and-history)
-  - [Social feed — your fitness community in one place](#social-feed--your-fitness-community-in-one-place)
-  - [Streaks, achievements & league](#streaks-achievements--league)
-  - [Calendar — every minute of training and every meal in one view](#calendar--every-minute-of-training-and-every-meal-in-one-view)
-  - [Profile & analytics — your body and habits, quantified](#profile--analytics--your-body-and-habits-quantified)
-- [Tech stack at a glance](#tech-stack-at-a-glance)
-- [Engineering highlights](#engineering-highlights)
-- [About the team](#about-the-team)
+- [Inside the app](#inside-the-app)
+  - [🥗 Nutrition](#-nutrition)
+  - [💪 Workout](#-workout)
+  - [👥 Social feed](#-social-feed)
+  - [🔥 Streaks, league & achievements](#-streaks-league--achievements)
+  - [📅 Calendar](#-calendar)
+  - [👤 Profile & analytics](#-profile--analytics)
+- [Tech stack](#tech-stack)
+- [By the numbers](#by-the-numbers)
+- [Get in touch](#get-in-touch)
 
 ---
 
-## Why Spotter exists
+## The story behind it
 
-I'm Alfonso, an engineer and lifelong athlete. For years I lived with the same frustration thousands of other people complain about: **to track your fitness life properly you end up paying five or six different premium subscriptions** — one for workouts, one for nutrition, one for streaks, one for body composition, one for the social side, one for AI coaching. None of them talk to each other, the data is fragmented across silos, and the experience is full of dark patterns and shallow features hiding behind paywalls.
+If you've ever tried to track your fitness life properly, you know the drill: one app for the gym, another for nutrition, a third for your weight, a fourth for habit streaks, a fifth for sharing progress with friends — each one asking for its own premium subscription and none of them talking to each other. Months go by, your data lives in six different silos, and most of what you actually want is hidden behind a paywall.
 
-I wanted **one beautifully designed app** that did the heavy lifting end-to-end: log a meal by taking a photo of it, track every set in the gym, see your real progress over weeks and months, build streaks that actually motivate you, and share the journey with the people who matter — without paying a fortune or stitching together a Frankenstein of apps.
+I'd been living with that frustration for years, so one weekend I sat down and started building the app I always wished existed. **One place** to snap a photo of a meal and get the macros, log every set at the gym, see your progress over months, build streaks that actually motivate you, and share the journey with the people who matter — without paying a fortune for it.
 
-So I built it. Spotter AI is now in production on iOS and Android, with **1,000+ downloads** and **400+ weekly active users** across both platforms.
+Ten months later, Spotter AI is live on iOS and Android with **1,000+ downloads** and **400+ weekly active users**, and people are using it daily.
+
+This repo tells the full story of how it was built.
 
 ---
 
-## The 30-second pitch
+## What you can do with it
 
-- **Nutrition tracking with AI**: snap a photo of your plate (or scan a barcode, or describe it in text), get a macro-by-macro breakdown in seconds powered by GPT-4o Vision.
-- **Full workout engine**: routines, supersets, rest timers, cardio, body part heatmaps, plate calculators, video playback per exercise.
-- **Social feed**: posts, likes, comments, profiles, contact-based recommendations, instagram-story sharing.
-- **Streaks, league and achievements**: gamification that actually rewards consistency, not vanity metrics.
-- **Calendar view**: every workout, every meal, every weight log in a single timeline.
-- **Coaching profile**: weight tracking, body composition, AI-generated recommendations.
-- **Production-grade ops**: Supabase Postgres + Edge Functions, RevenueCat subscriptions, push notifications, OTA updates, i18n in English and Spanish.
+| | |
+|---|---|
+| 📸 **Snap a meal** | Photo, barcode or text. GPT-4o Vision returns macros in 3 seconds. |
+| 🏋️ **Track every set** | Live workouts with rest timers, supersets, history hints and progression cues. |
+| 👥 **Share the journey** | A real social feed for fitness — posts, likes, profiles, contact-based discovery. |
+| 🔥 **Build streaks** | Daily streaks, weekly league, achievements that reward consistency over vanity. |
+| 📅 **See it all together** | One unified calendar: workouts, meals, weight, every active day. |
+| 📊 **Watch real progress** | Body composition, weight trends, AI coaching tips based on what you actually do. |
 
 ---
 
 ## System architecture
 
-```
-┌──────────────────────────────────────────────────────────────────────────┐
-│                                CLIENT                                    │
-│                        React Native + Expo SDK 54                        │
-│                          (iOS · Android · Web)                           │
-│                                                                          │
-│   ┌──────────────────────────────────────────────────────────────────┐   │
-│   │   Expo Router (file-based routing)                               │   │
-│   │   (tabs)   nutrition · workout · feed · streaks · calendar       │   │
-│   │   (modals) compose-post · paywall · share-post                   │   │
-│   └──────────────────────────────────────────────────────────────────┘   │
-│                                                                          │
-│   ┌──────────────────────────────────────────────────────────────────┐   │
-│   │   State — 21 domain stores (Zustand) with persistence            │   │
-│   │   nutritionStore · workoutStore · streakStore · socialStore ...  │   │
-│   └──────────────────────────────────────────────────────────────────┘   │
-│                                                                          │
-│   ┌──────────────────────────────────────────────────────────────────┐   │
-│   │   UI — 370+ .tsx components across 17 feature modules            │   │
-│   │   Native APIs: Camera · Notifications · Haptics · Auth · Media   │   │
-│   └──────────────────────────────────────────────────────────────────┘   │
-└──────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    │  HTTPS / Realtime channels
-                                    ▼
-┌──────────────────────────────────────────────────────────────────────────┐
-│                              BACKEND                                     │
-│                       Supabase (Postgres + Edge)                         │
-│                                                                          │
-│   Postgres schema with RLS · realtime subscriptions · storage buckets    │
-│                                                                          │
-│   ┌─────────────────────────── Edge Functions ──────────────────────┐    │
-│   │  analyze-food-v2        analyze-barcode      analyze-manual     │    │
-│   │  nutrition-service      translate-food-names weight-prompt      │    │
-│   │  moderate-user-media    discover-contacts    set-phone-number   │    │
-│   │  send-push-from-notification    delete-account    rc-webhook    │    │
-│   │  sync-from-revenuecat   sync-subscription   batch-sync-subs     │    │
-│   │  expire-pro-trials      send-feedback                           │    │
-│   └─────────────────────────────────────────────────────────────────┘    │
-└──────────────────────────────────────────────────────────────────────────┘
-                                    │
-                ┌───────────────────┼────────────────────┐
-                ▼                   ▼                    ▼
-       ┌──────────────┐    ┌──────────────┐     ┌──────────────┐
-       │  OpenAI API  │    │  RevenueCat  │     │  Expo Push   │
-       │  GPT-4o      │    │  Subs (iOS + │     │  Notifications│
-       │  Vision      │    │  Google Play)│     │              │
-       └──────────────┘    └──────────────┘     └──────────────┘
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#2D628C','primaryTextColor':'#fff','primaryBorderColor':'#1a4a6b','lineColor':'#5a8db5','fontFamily':'Inter, sans-serif','fontSize':'14px'}}}%%
+flowchart TB
+
+  subgraph CLIENT["📱 &nbsp; Mobile client &nbsp; — &nbsp; React Native · Expo SDK 54 · iOS / Android / Web"]
+    direction TB
+    Router["🗺️ &nbsp; Expo Router<br/><sub>file-based routes &nbsp;·&nbsp; (tabs) + (modals)</sub>"]
+    UI["🎨 &nbsp; UI layer<br/><sub>370+ components &nbsp;·&nbsp; 17 feature modules</sub>"]
+    Stores["🗂️ &nbsp; State layer<br/><sub>21 Zustand stores &nbsp;·&nbsp; persisted via AsyncStorage</sub>"]
+    Native["📲 &nbsp; Native APIs<br/><sub>Camera · Push · Haptics · Auth · Image · Media · Audio</sub>"]
+    Cache["⚡ &nbsp; Cache layer<br/><sub>dataCache · imageCache · videoCacheStore</sub>"]
+    Router --> UI
+    UI <--> Stores
+    UI --> Native
+    Stores <--> Cache
+  end
+
+  subgraph BACKEND["☁️ &nbsp; Backend &nbsp; — &nbsp; Supabase"]
+    direction LR
+    DB[("🐘 &nbsp; Postgres<br/><sub>RLS · Realtime · Triggers</sub>")]
+    AuthSvc["🔐 &nbsp; Auth<br/><sub>Apple · Google · Phone · Email</sub>"]
+    Storage[("📦 &nbsp; Storage<br/><sub>meal photos · avatars · posts</sub>")]
+    subgraph EDGE["⚡ 18 Edge Functions"]
+      direction TB
+      AI["<b>AI / Nutrition</b><br/>analyze-food-v2<br/>analyze-barcode<br/>analyze-manual<br/>nutrition-service<br/>translate-food-names"]
+      Subs["<b>Subscriptions</b><br/>rc-webhook<br/>sync-from-revenuecat<br/>sync-subscription<br/>batch-sync-subscriptions<br/>expire-pro-trials"]
+      Social["<b>Social / Moderation</b><br/>moderate-user-media<br/>discover-contacts<br/>set-phone-number"]
+      Notif["<b>Notifications & Lifecycle</b><br/>send-push-from-notification<br/>weight-prompt<br/>send-feedback<br/>delete-account"]
+    end
+  end
+
+  subgraph EXTERNAL["🌍 &nbsp; External services"]
+    direction LR
+    OpenAI["🧠 &nbsp; OpenAI<br/><sub>GPT-4o Vision &nbsp;·&nbsp; text</sub>"]
+    RC["💳 &nbsp; RevenueCat<br/><sub>App Store + Play unified</sub>"]
+    Push["🔔 &nbsp; Expo Push<br/><sub>per-user fan-out</sub>"]
+    OFF["🥦 &nbsp; Open Food Facts<br/><sub>barcode database</sub>"]
+  end
+
+  subgraph DEPLOY["🚀 &nbsp; Build & release pipeline"]
+    direction LR
+    EAS["⚙️ &nbsp; EAS Build"]
+    OTA["📡 &nbsp; EAS Update<br/><sub>over-the-air</sub>"]
+    Stores2["🏪 &nbsp; App Store<br/>Google Play"]
+  end
+
+  CLIENT ==>|"HTTPS &nbsp;+&nbsp; Realtime channels"| BACKEND
+  AI --> OpenAI
+  AI --> OFF
+  Subs --> RC
+  Notif --> Push
+  EAS --> Stores2
+  Stores2 -.->|"installs"| CLIENT
+  OTA -.->|"live JS bundles"| CLIENT
+
+  classDef clientStyle fill:#2D628C,stroke:#1a4a6b,color:#fff,stroke-width:2px
+  classDef backendStyle fill:#3ECF8E,stroke:#2a9968,color:#0a3d2e,stroke-width:2px
+  classDef externalStyle fill:#412991,stroke:#2a1862,color:#fff,stroke-width:2px
+  classDef deployStyle fill:#FE486F,stroke:#c93457,color:#fff,stroke-width:2px
+  classDef edgeFn fill:#a4f3d0,stroke:#2a9968,color:#0a3d2e
+
+  class Router,UI,Stores,Native,Cache clientStyle
+  class DB,AuthSvc,Storage backendStyle
+  class AI,Subs,Social,Notif edgeFn
+  class OpenAI,RC,Push,OFF externalStyle
+  class EAS,OTA,Stores2 deployStyle
 ```
 
-**Key decisions**
+### A few decisions worth flagging
 
-- **Expo SDK 54 + EAS Build**. One codebase, two stores, one OTA update pipeline. No native modules we don't strictly need — every new feature ships in days, not weeks.
-- **Supabase over a custom Node backend**. Postgres + Row-Level Security + auto-generated APIs + Edge Functions cover 95% of what a backend needs. We only write functions for the things Postgres can't do alone (AI calls, webhooks, push fan-out, subscription sync).
-- **Zustand over Redux/Context**. 21 lean stores, each owning a single domain. Persisted via AsyncStorage. Selectors instead of `useContext` to avoid re-renders.
-- **GPT-4o Vision for food recognition**. A single multimodal call returns macros, portion estimates and a name in 2–4 seconds. Cheaper, faster and more accurate than any commercial food-DB API at our scale.
-- **Strict TypeScript, ESLint + Prettier on every commit via Husky + lint-staged**. 370 `.tsx` files, near-zero `any`, type-safe Supabase generated clients.
+- **One Expo codebase, two stores, OTA on tap.** A single React Native app ships to iPhone, Android and the web. 95% of changes go out in minutes via Expo Update — no waiting for review.
+- **Supabase over a custom backend.** Postgres + Row-Level Security + Realtime + Edge Functions cover almost everything. The remaining 5% (AI calls, webhooks, push fan-out) lives in 18 small Edge Functions instead of a server I'd have to babysit.
+- **Zustand instead of Redux or Context.** 21 small stores, each owning one domain, each persisted. No provider hell, no boilerplate, no re-render storms.
+- **GPT-4o Vision for food.** One multimodal call returns name, portion and macros in 2–4 seconds. Cheaper, faster and more accurate at our scale than any commercial food-DB API.
+- **TypeScript strict + Husky on every commit.** 370+ files, near-zero `any`, ESLint + Prettier + `tsc --noEmit` block bad code before it lands.
 
 ---
 
@@ -156,15 +175,15 @@ spotter/
 │   │   ├── profile/          public profile · settings · recommendations · coaching
 │   │   └── dashboard.tsx
 │   ├── (modals)/             paywall · compose-post · share-post
-│   ├── auth.tsx              email/Apple/Google sign-in
+│   ├── auth.tsx              email / Apple / Google sign-in
 │   ├── reset-password.tsx
 │   ├── onboarding-pro.tsx
 │   └── onboarding-avatar-capture.tsx
 │
-├── components/               370+ .tsx components, grouped by feature
-│   ├── nutrition/  workout/  social/  streaks/  profile/  charts/
-│   ├── coaching/   achievements/  onboarding/  subscription/  tutorial/
-│   ├── settings/   updates/  background/  logo/  ui/  dev/
+├── components/               370+ .tsx components grouped by feature
+│   ├── nutrition/   workout/   social/   streaks/   profile/   charts/
+│   ├── coaching/    achievements/   onboarding/   subscription/   tutorial/
+│   ├── settings/    updates/   background/   logo/   ui/   dev/
 │   └── ...
 │
 ├── store/                    21 Zustand stores (one per domain)
@@ -176,222 +195,231 @@ spotter/
 │   postLinks.ts · postShare.ts · shareToInstagramStories.ts
 │
 ├── supabase/                 Backend (Postgres + Edge Functions)
-│   ├── functions/            18 deployed Edge Functions (see architecture diagram)
+│   ├── functions/            18 deployed Edge Functions
 │   ├── migrations/           Postgres schema migrations
 │   └── seeds/                Reference data (exercises, foods, achievements)
 │
-├── hooks/  i18n/  theme/  types/  utils/  constants/  config/
+├── hooks/   i18n/   theme/   types/   utils/   constants/   config/
 ├── plugins/                  Custom Expo config plugins
 ├── remotion/                 Programmatic video generation (workout recaps)
-├── scripts/                  asset pipelines (WebP conversion, achievement generation)
+├── scripts/                  Asset pipelines (WebP conversion, achievement generation)
 └── native/                   Native-side overrides (Android resources, build hooks)
 ```
 
 ---
 
-## Feature deep-dives
+## Inside the app
 
-### Nutrition — AI food analysis with macro tracking
+### 🥗 Nutrition
 
-> Log what you eat in any of three ways, see exactly how it breaks down into calories and macros, and watch the rings close.
+> Log what you eat in seconds, watch the rings close, and finally know what you actually put in your body this week.
 
 <table>
 <tr>
-<td width="33%" align="center"><img src="./assets/tutorial/nutrition_foto.webp" alt="Photo capture"/><br/><sub><b>Photo</b><br/>Snap a plate · GPT-4o Vision returns macros</sub></td>
-<td width="33%" align="center"><img src="./assets/tutorial/nutrition_texto.webp" alt="Text input"/><br/><sub><b>Text</b><br/>Describe the meal in natural language</sub></td>
-<td width="33%" align="center"><img src="./assets/tutorial/nutrition_draft.webp" alt="Draft review"/><br/><sub><b>Review draft</b><br/>Edit portions before saving</sub></td>
-</tr>
-<tr>
-<td align="center"><img src="./assets/tutorial/nutrition_anillos.webp" alt="Macro rings"/><br/><sub><b>Concentric macro rings</b><br/>Protein · carbs · fat at a glance</sub></td>
-<td align="center"><img src="./assets/tutorial/nutrition_barras.webp" alt="Daily bars"/><br/><sub><b>Daily breakdown</b><br/>Per-meal bars across the day</sub></td>
-<td align="center"><img src="./assets/tutorial/nutrition_calendario.webp" alt="Calendar"/><br/><sub><b>Weekly calendar</b><br/>Adherence at a glance</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/nutrition_draft.webp" alt="Review draft"/><br/><sub><b>Review draft</b><br/>Edit portions before saving</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/nutrition_anillos.webp" alt="Macro rings"/><br/><sub><b>Concentric macro rings</b><br/>Protein · carbs · fat at a glance</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/nutrition_barras.webp" alt="Daily bars"/><br/><sub><b>Daily breakdown</b><br/>Per-meal bars across the day</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/nutrition_calendario.webp" alt="Weekly calendar"/><br/><sub><b>Weekly calendar</b><br/>Adherence at a glance</sub></td>
 </tr>
 </table>
 
-**Under the hood**
+Three ways to log: take a photo of your plate, scan a barcode, or just type what you ate. Behind the scenes, the photo flow uploads to Supabase Storage, hands a signed URL to GPT-4o Vision, and gets back a structured breakdown — name, portion, macros, confidence per item — in two to four seconds. You see a draft, edit it if you need to, and the rings close on save.
 
-- Three Edge Functions handle the analysis pipeline:
-  - `analyze-food-v2` — multimodal GPT-4o Vision call. Image is uploaded to Supabase Storage, signed URL passed to OpenAI, structured JSON returned with name, portion, macros and confidence per item.
-  - `analyze-barcode` — Open Food Facts lookup + AI fallback for unknown barcodes.
-  - `analyze-manual` — text-to-macros for "two slices of pizza and a Coke" style entries.
-- `nutritionStore` (Zustand) holds the day's meals, weight logs and water intake; selectors compute the macro totals on every read.
-- `ConcentricMacroRings`, `MacroCard`, `MealCard`, `WeeklyNutritionCalendar` are the main UI components. The rings use `react-native-svg` with custom path interpolation animated via `react-native-reanimated`.
-- Meals are persisted in Postgres with full audit history (you can edit a meal three days later and the rings recompute backwards).
-- Multi-plate meals: 2026-04 migration `multi_plate_meals.sql` enabled tracking shared meals where one plate has multiple components.
+<details>
+<summary><b>Under the hood</b></summary>
+
+- **3 Edge Functions** power the analysis pipeline: `analyze-food-v2` (multimodal Vision call), `analyze-barcode` (Open Food Facts + AI fallback for unknown codes), `analyze-manual` (text-to-macros).
+- `nutritionStore` (Zustand) holds the day's meals, weight logs and water intake. Selectors compute macro totals on every read so the rings stay in sync.
+- The concentric rings are pure `react-native-svg` paths animated with `react-native-reanimated`. No third-party chart lib.
+- Meals are persisted in Postgres with full edit history — change a meal three days later and the rings recompute backwards.
+- 2026-04 migration added multi-plate meals so a shared lunch logs as one meal with multiple components.
+
+</details>
 
 ---
 
-### Workout — full training engine with rest, supersets and history
+### 💪 Workout
 
-> Build your routine, then live-track every set, every rep, every second of rest. The app remembers your last weight, suggests progression, and times you between sets.
+> Build your routine, then live-track every set, every rep, every second of rest. Spotter remembers your last weight, hints at progression, and times you between sets.
 
 <table>
 <tr>
-<td width="33%" align="center"><img src="./assets/tutorial/workout_rutinas.webp" alt="Routines"/><br/><sub><b>Routines</b><br/>Plan and reuse workouts</sub></td>
-<td width="33%" align="center"><img src="./assets/tutorial/workout_buscar.webp" alt="Exercise search"/><br/><sub><b>Exercise picker</b><br/>Search by muscle group or name</sub></td>
-<td width="33%" align="center"><img src="./assets/tutorial/workout_empezar.webp" alt="Start workout"/><br/><sub><b>Start workout</b><br/>Live session with auto-rest</sub></td>
-</tr>
-<tr>
-<td align="center"><img src="./assets/tutorial/workout_series.webp" alt="Set tracking"/><br/><sub><b>Set tracking</b><br/>Weight · reps · RPE · history hints</sub></td>
-<td align="center"><img src="./assets/tutorial/workout_final.webp" alt="Workout summary"/><br/><sub><b>Summary</b><br/>Volume · PRs · time per muscle</sub></td>
-<td align="center"><img src="./assets/tutorial/workout_calendario.webp" alt="Workout calendar"/><br/><sub><b>Calendar</b><br/>Training adherence at a glance</sub></td>
-</tr>
-<tr>
-<td colspan="3" align="center"><img src="./assets/tutorial/workout_recuperacion.webp" alt="Recovery view" width="33%"/><br/><sub><b>Recovery view</b> — body heatmap shows which muscle groups have been hit and which need a break</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/workout_buscar.webp" alt="Exercise picker"/><br/><sub><b>Exercise picker</b><br/>Search by muscle group or name</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/workout_series.webp" alt="Set tracking"/><br/><sub><b>Set tracking</b><br/>Weight · reps · RPE · history hints</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/workout_final.webp" alt="Workout summary"/><br/><sub><b>Workout summary</b><br/>Volume · PRs · time per muscle</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/workout_calendario.webp" alt="Workout calendar"/><br/><sub><b>Workout calendar</b><br/>Training adherence at a glance</sub></td>
 </tr>
 </table>
 
-**Under the hood**
+Start a session and Spotter pulls your last numbers for every exercise so you never have to remember what you lifted last week. Supersets and drop-sets are first-class citizens. The rest timer runs in the background and pings you when it's time to lift again — phone in your pocket, eyes off the screen. When you finish, you get a summary with total volume, personal records and a body heatmap showing exactly which muscles took a beating.
 
-- Five Zustand stores power the workout engine: `workoutStore` (session lifecycle), `routineStore` (templates), `exerciseStore` (catalogue), `setStore` (live set entry), `cardioSetStore` (cardio), `restTimerStore` (rest), and `coachingStore` (suggestions).
-- Live workout screen (`ActiveWorkoutScreen.tsx`) handles supersets, drop-sets, rest pauses and per-set notes. Pulls last-session values from Postgres on mount so the user sees their previous numbers immediately.
-- Background haptics + push notification fires when the rest timer ends so the user can put the phone away.
-- Recovery heatmap powered by `react-native-body-highlighter`. Each completed exercise contributes weighted volume to its primary and secondary muscle groups; a decay function over the last 7 days produces the visualisation.
-- Workout summaries are rendered with `remotion/` for a future shareable-video feature.
+<details>
+<summary><b>Under the hood</b></summary>
+
+- **Six Zustand stores** orchestrate the training engine: `workoutStore` (session lifecycle), `routineStore` (templates), `exerciseStore` (catalogue), `setStore` (live set entry), `cardioSetStore` (cardio), `restTimerStore`, plus `coachingStore` for progression suggestions.
+- The live workout screen (`ActiveWorkoutScreen.tsx`) handles supersets, drop-sets, rest-pauses and per-set notes. On mount it fetches last-session values from Postgres so the previous numbers appear instantly.
+- Recovery heatmap uses `react-native-body-highlighter`. Each completed exercise contributes weighted volume to its primary and secondary muscle groups; a 7-day decay function drives the colour intensity.
+- Background haptics + push notifications fire when the rest timer ends.
+- The `remotion/` folder generates shareable workout recap videos programmatically — work in progress.
+
+</details>
 
 ---
 
-### Social feed — your fitness community in one place
+### 👥 Social feed
 
-> Post photos and progress updates, comment, like, follow contacts you already know, share to Instagram stories with one tap.
+> A real social network for the people in your life who actually train. Post a meal, a PR, a progress photo. Like, comment, follow. No algorithm hijacking your feed.
 
 <table>
 <tr>
-<td width="50%" align="center"><img src="./assets/tutorial/feed_muro.webp" alt="Feed"/><br/><sub><b>Feed</b><br/>Friends and people you follow</sub></td>
-<td width="50%" align="center"><img src="./assets/tutorial/feed_buscar.webp" alt="Search"/><br/><sub><b>Discover</b><br/>Find users by handle, name or contacts</sub></td>
-</tr>
-<tr>
-<td align="center"><img src="./assets/tutorial/feed_like.webp" alt="Likes"/><br/><sub><b>Reactions</b><br/>Like, comment, save</sub></td>
-<td align="center"><img src="./assets/tutorial/feed_reportar.webp" alt="Report"/><br/><sub><b>Moderation</b><br/>Report inappropriate content (Apple/Google compliant)</sub></td>
+<td width="33%" align="center"><img src="./assets/tutorial/feed_muro.webp" alt="Feed"/><br/><sub><b>Feed</b><br/>Friends and people you follow</sub></td>
+<td width="33%" align="center"><img src="./assets/tutorial/feed_buscar.webp" alt="Discover"/><br/><sub><b>Discover</b><br/>Find users by handle, name or contacts</sub></td>
+<td width="33%" align="center"><img src="./assets/tutorial/feed_like.webp" alt="Reactions"/><br/><sub><b>Reactions</b><br/>Like, comment, save</sub></td>
 </tr>
 </table>
 
-**Under the hood**
+Posts live chronologically, no engagement algorithm. Discover new friends through your existing contacts — Spotter hashes phone numbers locally before sending anything to the backend, so we never see who's actually in your address book. One-tap sharing pushes a workout summary straight into your Instagram Story with the right background.
+
+<details>
+<summary><b>Under the hood</b></summary>
 
 - `socialStore` + `composeStore` coordinate feed state, drafts and uploads.
-- Posts live in Postgres with public-by-default RLS; comments and likes are separate tables with foreign keys + cascade.
-- Contact-based discovery uses the `discover-contacts` Edge Function: device contacts are hashed locally before being sent, then matched against the same hash stored against existing users (privacy-preserving).
-- Moderation pipeline (`moderate-user-media` Edge Function) runs newly uploaded media through automated content checks before they appear in the feed — required for App Store / Play Store compliance.
-- Story sharing via `shareToInstagramStories.ts` deep-links the user out to the IG composer with their workout summary pre-loaded as a background.
+- Posts live in Postgres with public-by-default Row-Level Security; comments and likes are separate tables with foreign keys and cascade.
+- Contact discovery (`discover-contacts` Edge Function) hashes numbers client-side before sending; the same hash is stored against existing users, so matching happens without the server ever seeing raw phone numbers.
+- Newly uploaded media flows through `moderate-user-media` for automated content checks — required for App Store / Play Store compliance.
+- Instagram Story sharing handled by `shareToInstagramStories.ts` via deep-linking with a pre-rendered background image.
+
+</details>
 
 ---
 
-### Streaks, achievements & league
+### 🔥 Streaks, league & achievements
 
-> Show up every day, build a streak, climb the league, unlock achievements. Gamification that rewards real consistency, not vanity logins.
+> Show up every day, build a streak, climb the weekly league. Gamification that rewards real consistency — not just opening the app.
 
 <table>
 <tr>
-<td width="33%" align="center"><img src="./assets/tutorial/streaks_racha.webp" alt="Streak"/><br/><sub><b>Daily streak</b><br/>Don't break the chain</sub></td>
-<td width="33%" align="center"><img src="./assets/tutorial/streaks_logros.webp" alt="Achievements"/><br/><sub><b>Achievements</b><br/>Unlockable milestones across all features</sub></td>
-<td width="33%" align="center"><img src="./assets/tutorial/streaks_liga.webp" alt="League"/><br/><sub><b>Weekly league</b><br/>Compete against a small bracket of users</sub></td>
-</tr>
-<tr>
-<td colspan="3"></td>
-</tr>
-<tr>
-<td align="center"><img src="./assets/tutorial/streaks_desafios.webp" alt="Challenges"/><br/><sub><b>Challenges</b><br/>Time-limited goals with bonus XP</sub></td>
-<td align="center"><img src="./assets/tutorial/streaks_calendario.webp" alt="Streak calendar"/><br/><sub><b>Calendar view</b><br/>See every active day at a glance</sub></td>
-<td align="center"><sub>&nbsp;</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/streaks_racha.webp" alt="Streak"/><br/><sub><b>Daily streak</b><br/>Don't break the chain</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/streaks_liga.webp" alt="League"/><br/><sub><b>Weekly league</b><br/>Compete in a small bracket</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/streaks_desafios.webp" alt="Challenges"/><br/><sub><b>Challenges</b><br/>Time-limited goals with bonus XP</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/streaks_calendario.webp" alt="Streak calendar"/><br/><sub><b>Streak calendar</b><br/>See every active day at a glance</sub></td>
 </tr>
 </table>
 
-**Under the hood**
+Every day you log something — a workout, a meal, a weight check — your streak grows. Miss a day? You've got one free freeze per week before the chain breaks. Weekly leagues group you with twenty other users and promote the top finishers; achievements unlock as you hit real milestones across every part of the app.
 
-- `streakStore` + `achievementStore` keep gamification state in sync with backend triggers.
-- Achievements are defined declaratively in `assets/images/achievements` + JSON metadata; the `gen:achv` script (`scripts/generate-achievement-assets.ts`) regenerates the asset pipeline at install time.
-- League membership is recomputed weekly on the backend; users are grouped into brackets of ~20 with promotion/relegation based on weekly XP.
-- Daily streak grace: one "freeze" per week so a single missed day doesn't reset everything — measured behavioural impact on retention.
+<details>
+<summary><b>Under the hood</b></summary>
+
+- `streakStore` + `achievementStore` keep the gamification layer in sync with backend triggers.
+- Achievements are defined declaratively (JSON metadata + image assets). The `gen:achv` script regenerates the asset pipeline at install time so adding a new achievement is one PR.
+- Leagues recompute weekly on the backend: users grouped into brackets of ~20 with promotion / relegation based on weekly XP.
+- The "one freeze per week" mechanic has a measurable retention impact — missing a single day no longer resets months of progress.
+
+</details>
 
 ---
 
-### Calendar — every minute of training and every meal in one view
+### 📅 Calendar
 
-> One unified calendar where workouts, nutrition logs, weight checkins and streak days all live together.
+> One unified timeline of your fitness life. Every workout, every meal, every weight check-in, in one place.
 
 <table>
 <tr>
 <td width="33%" align="center"><img src="./assets/tutorial/calendar_mes.webp" alt="Month view"/><br/><sub><b>Month</b><br/>Birds-eye view of the whole month</sub></td>
-<td width="33%" align="center"><img src="./assets/tutorial/calendar_semana.webp" alt="Week view"/><br/><sub><b>Week</b><br/>Side-by-side compare across days</sub></td>
+<td width="33%" align="center"><img src="./assets/tutorial/calendar_semana.webp" alt="Week view"/><br/><sub><b>Week</b><br/>Side-by-side comparison across days</sub></td>
 <td width="33%" align="center"><img src="./assets/tutorial/calendar_resumen.webp" alt="Summary"/><br/><sub><b>Day summary</b><br/>Macros · training time · weight</sub></td>
 </tr>
 </table>
 
-**Under the hood**
+The calendar is the answer to "wait, did I work out this week?" — a single screen that shows whether you actually did. Calorie ring, workout chip and streak flame summarised on every cell, with three zoom levels from month down to a single day.
 
-- Pure-client calendar. All three views read from cached Supabase queries (`dataCache.ts`).
-- Calendar cells render compact "summary" badges (calories ring · workout chip · streak fire) computed from store selectors — no extra round-trips when scrolling between months.
-- Date logic in `dayjs` to keep bundle size down vs `moment`.
+<details>
+<summary><b>Under the hood</b></summary>
+
+- All three views read from cached Supabase queries via `dataCache.ts` — scrolling months back never triggers a new round-trip.
+- Each calendar cell renders compact summary badges (calorie ring · workout chip · streak fire) computed from store selectors.
+- Pure `dayjs` for date logic to keep the bundle small (we don't ship `moment`).
+
+</details>
 
 ---
 
-### Profile & analytics — your body and habits, quantified
+### 👤 Profile & analytics
 
-> Your public profile, plus the private dashboard that shows your real progress: weight, body composition, AI coaching suggestions, and the routines you've built.
+> Your public profile, plus the private dashboard that shows what your habits actually look like over time.
 
 <table>
 <tr>
-<td width="33%" align="center"><img src="./assets/tutorial/profile_configuracion.webp" alt="Settings"/><br/><sub><b>Settings</b><br/>Account · units · privacy</sub></td>
-<td width="33%" align="center"><img src="./assets/tutorial/profile_notificacion.webp" alt="Notifications"/><br/><sub><b>Notifications</b><br/>Per-channel push controls</sub></td>
-<td width="33%" align="center"><img src="./assets/tutorial/profile_posts.webp" alt="Posts grid"/><br/><sub><b>Your posts</b><br/>Public grid view</sub></td>
-</tr>
-<tr>
-<td align="center"><img src="./assets/tutorial/profile_rutinas.webp" alt="Routines"/><br/><sub><b>Your routines</b><br/>Reusable workout templates</sub></td>
-<td align="center"><img src="./assets/tutorial/profile_recomendacion.webp" alt="Recommendations"/><br/><sub><b>AI coaching</b><br/>Personalised next steps</sub></td>
-<td align="center"><sub>&nbsp;</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/profile_configuracion.webp" alt="Settings"/><br/><sub><b>Settings</b><br/>Account · units · privacy</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/profile_notificacion.webp" alt="Notifications"/><br/><sub><b>Notifications</b><br/>Per-channel push controls</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/profile_posts.webp" alt="Posts grid"/><br/><sub><b>Your posts</b><br/>Public grid view</sub></td>
+<td width="25%" align="center"><img src="./assets/tutorial/profile_rutinas.webp" alt="Routines"/><br/><sub><b>Your routines</b><br/>Reusable workout templates</sub></td>
 </tr>
 </table>
 
-**Under the hood**
+A clean public profile (posts grid + routines + bio), backed by a private analytics layer that tracks weight, body composition and adherence over time. The app prompts you for a weekly weight check at smart moments and surfaces short, ranked recommendations based on what you actually did the last two weeks — never more than three at a time so it never feels like nagging.
 
-- `profileStore` + `coachingStore` + `recommendationsStore` + `comparisionMetricsStore` (sic — historical typo kept for stability) coordinate the analytics surface.
-- Weight prompt: the `weight-prompt` Edge Function schedules a smart reminder once per week when no log is detected; the prompt is dismissable per-user via `notificationStore`.
-- Recommendations engine: rule-based + GPT-generated tips fed off the last 14 days of workout/nutrition data. Returns a small ranked list (max 3) so the user is never overwhelmed.
-- Configuration screen wires up `expo-store-review`, `expo-secure-store`, `expo-clipboard`, RevenueCat subscription management, account deletion (GDPR compliant via the `delete-account` Edge Function), and 2026's mandatory App Store age rating flow.
+<details>
+<summary><b>Under the hood</b></summary>
 
----
+- Four stores coordinate this surface: `profileStore`, `coachingStore`, `recommendationsStore` and `comparisionMetricsStore`.
+- `weight-prompt` Edge Function schedules a smart weekly reminder; the prompt is dismissable per-user via `notificationStore`.
+- Recommendations engine combines simple rules with GPT-generated tips off the last 14 days of data, capped at 3 suggestions ranked by predicted impact.
+- Configuration screen wires up `expo-store-review`, `expo-secure-store`, RevenueCat subscription management, GDPR-compliant account deletion (`delete-account` Edge Function) and the mandatory App Store age-rating flow.
 
-## Tech stack at a glance
-
-| Layer                  | What we use                                                                                 |
-| ---------------------- | ------------------------------------------------------------------------------------------- |
-| **Mobile framework**   | React Native 0.81 · Expo SDK 54 · Expo Router (file-based)                                  |
-| **Language**           | TypeScript 5.9 (strict mode)                                                                |
-| **State**              | Zustand 5 — 21 domain stores with AsyncStorage persistence                                  |
-| **UI / Animation**     | `react-native-reanimated` · `react-native-svg` · `react-native-paper` · Lucide icons        |
-| **Charts**             | `react-native-chart-kit` · `react-native-svg-charts` · `react-native-body-highlighter` · `@salmonco/react-native-radar-chart` |
-| **Backend**            | Supabase — Postgres + Auth + Realtime + Storage + 18 Edge Functions                          |
-| **AI**                 | OpenAI GPT-4o (Vision + text) for food analysis, recommendations, weight prompts            |
-| **Subscriptions**      | RevenueCat (App Store + Google Play, unified analytics + webhooks)                          |
-| **Auth**               | Email · Apple · Google · phone (libphonenumber-js)                                          |
-| **Push notifications** | Expo Push Service with backend fan-out via `send-push-from-notification`                    |
-| **Build & release**    | EAS Build · EAS Submit · EAS Update (OTA)                                                   |
-| **i18n**               | i18next + i18next-icu, EN + ES (auto-scanned via `i18next-scanner`)                         |
-| **Video**              | `expo-video` for exercise demos · `remotion` for programmatic workout recaps                |
-| **Quality**            | ESLint 9 · Prettier · Husky · lint-staged · `tsc --noEmit` on every commit                  |
+</details>
 
 ---
 
-## Engineering highlights
+## Tech stack
 
-- **748 commits across 106 pull requests, 10 months of iteration.** A live, in-store product — not a demo.
-- **370+ TypeScript files, 17 feature modules, 21 state stores.** All strict-typed, all linted, all formatted on commit.
-- **18 Supabase Edge Functions in production.** AI calls, RevenueCat webhooks, push fan-out, content moderation, account deletion, subscription sync — none of it living on a server we have to babysit.
-- **GPT-4o Vision food pipeline** running at ~3 s p50 latency end-to-end (capture → analyze → review draft).
-- **Native modules only when strictly necessary** — every other capability comes from Expo SDK 54, keeping OTA updates available for 95% of changes.
-- **App Store + Play Store compliance done properly**: content moderation, contact discovery with hashed-before-send, account deletion endpoint, mandatory age rating flow, per-channel notification controls.
-- **Localisation in two languages from day one**, with `i18next-scanner` automatically detecting missing keys on each commit.
+| Layer | What we use |
+| --- | --- |
+| **Mobile framework** | React Native 0.81 · Expo SDK 54 · Expo Router (file-based) |
+| **Language** | TypeScript 5.9 in strict mode |
+| **State** | Zustand 5 — 21 domain stores with AsyncStorage persistence |
+| **UI / animation** | `react-native-reanimated` · `react-native-svg` · `react-native-paper` · Lucide icons |
+| **Charts** | `react-native-chart-kit` · `react-native-svg-charts` · `react-native-body-highlighter` · radar charts |
+| **Backend** | Supabase — Postgres + Auth + Realtime + Storage + 18 Edge Functions |
+| **AI** | OpenAI GPT-4o (Vision + text) for food analysis, recommendations, weight prompts |
+| **Subscriptions** | RevenueCat (App Store + Google Play, unified analytics + webhooks) |
+| **Auth** | Email · Apple · Google · phone (libphonenumber-js) |
+| **Push notifications** | Expo Push Service with backend fan-out via `send-push-from-notification` |
+| **Build & release** | EAS Build · EAS Submit · EAS Update (OTA) |
+| **i18n** | i18next + i18next-icu, EN + ES (auto-scanned via `i18next-scanner`) |
+| **Video** | `expo-video` for exercise demos · `remotion` for programmatic workout recaps |
+| **Quality** | ESLint 9 · Prettier · Husky · lint-staged · `tsc --noEmit` on every commit |
 
 ---
 
-## About the team
+## By the numbers
 
-Spotter AI is built and operated by **Alfonso Mayoral** ([alfonsomayoral29@gmail.com](mailto:alfonsomayoral29@gmail.com)) — founder, full-stack engineer, designer, and the user the app was first built for.
+| | |
+| ---:| --- |
+| **748** | commits over 10 months |
+| **106** | pull requests merged into `main` |
+| **370+** | TypeScript files, all strict-typed |
+| **21** | Zustand stores, one per domain |
+| **18** | Supabase Edge Functions in production |
+| **2** | languages from day one (English + Spanish) |
+| **1,000+** | downloads across App Store + Google Play |
+| **400+** | weekly active users |
 
-- 🌐 [spotter-ai.app](https://www.spotter-ai.app/)
-- 🍎 [App Store](https://apps.apple.com/us/app/spotter-ai/id6756170372)
-- 🤖 [Google Play](https://play.google.com/store/apps/details?id=com.alfonmayoral.spotteria)
-- 👤 Personal portfolio: [alfonsomayoral.com](https://portfolio-website-two-rho-44.vercel.app/)
+---
+
+## Get in touch
+
+Spotter AI is built and run by **Alfonso Mayoral** — founder, full-stack engineer, designer, and the very first user the app was built for.
+
+<div align="center">
+
+[![Email](https://img.shields.io/badge/Email-alfonsomayoral29%40gmail.com-2D628C?style=for-the-badge&logo=gmail&logoColor=white)](mailto:alfonsomayoral29@gmail.com)
+[![Website](https://img.shields.io/badge/Portfolio-alfonsomayoral.com-000000?style=for-the-badge)](https://portfolio-website-two-rho-44.vercel.app/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alfonsomayoral/)
+[![GitHub](https://img.shields.io/badge/GitHub-alfonsomayoral-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/alfonsomayoral)
+
+</div>
 
 ---
 
