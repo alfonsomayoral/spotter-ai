@@ -11,7 +11,7 @@
 [![Website](https://img.shields.io/badge/Web-spotter--ai.app-2D628C?style=for-the-badge&logo=safari&logoColor=white)](https://www.spotter-ai.app/)
 
 [![Downloads](https://img.shields.io/badge/Downloads-1%2C000%2B-brightgreen?style=flat-square)](https://apps.apple.com/us/app/spotter-ai/id6756170372)
-[![Weekly Active Users](https://img.shields.io/badge/WAU-400%2B-blueviolet?style=flat-square)](#)
+[![Weekly Active Users](https://img.shields.io/badge/MAU-400%2B-blueviolet?style=flat-square)](#)
 [![Commits](https://img.shields.io/badge/commits-748-blue?style=flat-square)](#)
 [![Pull Requests](https://img.shields.io/badge/pull%20requests-106-orange?style=flat-square)](#)
 [![Status](https://img.shields.io/badge/status-In%20Production-success?style=flat-square)](#)
@@ -62,7 +62,7 @@ If you've ever tried to track your fitness life properly, you know the drill: on
 
 I'd been living with that frustration for years, so one weekend I sat down and started building the app I always wished existed. **One place** to snap a photo of a meal and get the macros, log every set at the gym, see your progress over months, build streaks that actually motivate you, and share the journey with the people who matter — without paying a fortune for it.
 
-Ten months later, Spotter AI is live on iOS and Android with **1,000+ downloads** and **400+ weekly active users**, and people are using it daily.
+Ten months later, Spotter AI is live on iOS and Android with **1,000+ downloads** and **400+ monthly active users**, and people are using it daily.
 
 This repo tells the full story of how it was built.
 
@@ -408,7 +408,7 @@ A clean public profile (posts grid + routines + bio), backed by a private analyt
 | **18** | Supabase Edge Functions in production |
 | **2** | languages from day one (English + Spanish) |
 | **1,000+** | downloads across App Store + Google Play |
-| **400+** | weekly active users |
+| **400+** | monthly active users |
 
 ---
 
